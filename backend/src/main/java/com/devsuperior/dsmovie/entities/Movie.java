@@ -24,6 +24,9 @@ public class Movie implements Serializable {
 	private Double score;
 	private Integer count;
 	private String image;
+	private String synopsis;
+
+
 	
 	@OneToMany(mappedBy = "id.movie")
 	private Set<Score> scores = new HashSet<>();
@@ -31,12 +34,13 @@ public class Movie implements Serializable {
 	public Movie() {
 	}
 
-	public Movie(Long id, String title, Double score, Integer count, String image) {
+	public Movie(Long id, String title, Double score, Integer count, String image, String synopsis) {
 		this.id = id;
 		this.title = title;
 		this.score = score;
 		this.count = count;
 		this.image = image;
+		this.synopsis = synopsis;
 	}
 
 	public Long getId() {
@@ -77,6 +81,14 @@ public class Movie implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
 	}
 
 	public Set<Score> getScores() {
