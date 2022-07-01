@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dsmovie.dto.MovieDTO;
@@ -21,6 +22,11 @@ public class MovieController {
 	@GetMapping
 	public Page<MovieDTO> findAll(Pageable pageable) {
 		return service.findAll(pageable);
+	}
+	
+	@GetMapping(value = "/title")
+	public Page<MovieDTO> findByName(@RequestParam(value = "title") String title, Pageable pageable) {
+		return service.findByName(title, pageable);
 	}
 	
 	@GetMapping(value = "/{id}")

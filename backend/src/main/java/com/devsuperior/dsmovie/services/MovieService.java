@@ -17,6 +17,14 @@ public class MovieService {
 	private MovieRepository repository;
 	
 	@Transactional(readOnly = true)
+	public Page<MovieDTO> findByName(String title, Pageable pageable) {
+		Page<Movie> result = repository.findByTitleLike(title, pageable);
+		
+		Page<MovieDTO> page = result.map(x -> new MovieDTO(x));
+		return page;
+	}
+	
+	@Transactional(readOnly = true)
 	public Page<MovieDTO> findAll(Pageable pageable) {
 		Page<Movie> result = repository.findAll(pageable);
 		
