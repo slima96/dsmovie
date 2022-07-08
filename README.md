@@ -1,1 +1,2 @@
-# dsmovie
+<p align="center">
+  <b>DSMovie</b> é um projeto desenvolvido durante a Semana Spring React 4.0, realizada pela escola de programação <b><a href="https://devsuperior.com.br/">DevSuperior</a></b>. Durante a Semana Spring React desenvolvemos uma API <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> em Spring Boot utilizando a linguagem de programação Java e Front-end utilizando React. Após o evento, decidi adicionar ao projeto, um aplicativo desenvolvido em Firemonkey, usando Object Pascal, que será compatível com as plataformas Windows, macOS, iOS e Android.
