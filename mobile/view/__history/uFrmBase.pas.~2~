@@ -1,0 +1,149 @@
+unit uFrmBase;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs;
+
+type
+  TFrmBase = class(TForm)
+    procedure FormCreate(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
+    procedure FormFocusChanged(Sender: TObject);
+    procedure FormVirtualKeyboardHidden(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
+    procedure FormVirtualKeyboardShown(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
+  private
+    FKBBounds: TRectF;
+    FNeedOffset: Boolean;
+
+    {$IFNDEF MSWINDOWS}
+    procedure CalcContentBoundsProc(Sender: TObject; var ContentBounds: TRectF);
+    procedure UpdateKBBounds;
+    procedure RestorePosition;
+    {$ENDIF}
+
+    { Private declarations }
+  public
+    useBackButton : Boolean;
+
+    { Public declarations }
+  end;
+
+var
+  FrmBase: TFrmBase;
+
+implementation
+
+{$R *.fmx}
+
+procedure TFrmBase.FormCreate(Sender: TObject);
+begin
+    useBackButton := true;
+
+    {$IFNDEF MSWINDOWS}
+    VKAutoShowMode := TVKAutoShowMode.Always;
+    vScroll.OnCalcContentBounds := CalcContentBoundsProc;
+    {$ENDIF}
+end;
+
+procedure TFrmBase.FormFocusChanged(Sender: TObject);
+begin
+    {$IFNDEF MSWINDOWS}
+    UpdateKBBounds;
+    {$ENDIF}
+end;
+
+procedure TFrmBase.FormKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+    if Key = vkReturn then
+    begin
+       Key := vkTab;
+       KeyDown(Key, KeyChar, Shift);
+    end;
+end;
+
+procedure TFrmBase.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+  Shift: TShiftState);
+begin
+    if NOT useBackButton then
+        if Key = vkHardwareBack then
+        begin
+            Key := 0;
+        end;
+end;
+
+procedure TFrmBase.FormVirtualKeyboardHidden(Sender: TObject;
+  KeyboardVisible: Boolean; const Bounds: TRect);
+begin
+    {$IFNDEF MSWINDOWS}
+    FKBBounds.Create(0, 0, 0, 0);
+    FNeedOffset := False;
+    RestorePosition;
+    {$ENDIF}
+end;
+
+procedure TFrmBase.FormVirtualKeyboardShown(Sender: TObject;
+  KeyboardVisible: Boolean; const Bounds: TRect);
+begin
+    {$IFNDEF MSWINDOWS}
+    FKBBounds := TRectF.Create(Bounds);
+    FKBBounds.TopLeft := ScreenToClient(FKBBounds.TopLeft);
+    FKBBounds.BottomRight := ScreenToClient(FKBBounds.BottomRight);
+    UpdateKBBounds;
+    {$ENDIF}
+end;
+
+{$IFNDEF MSWINDOWS}
+procedure TFrmBase.UpdateKBBounds;
+var
+    LFocused : TControl;
+    LFocusRect: TRectF;
+begin
+    FNeedOffset := False;
+    if Assigned(Focused) then
+    begin
+        LFocused := TControl(Focused.GetObject);
+        LFocusRect := LFocused.AbsoluteRect;
+        LFocusRect.Offset(vScroll.ViewportPosition);
+        if (LFocusRect.IntersectsWith(TRectF.Create(FKBBounds))) and
+           (LFocusRect.Bottom > FKBBounds.Top) then
+        begin
+          FNeedOffset := True;
+          mainLayout.Align := TAlignLayout.Horizontal;
+          vScroll.RealignContent;
+          Application.ProcessMessages;
+          vScroll.ViewportPosition :=
+            PointF(vScroll.ViewportPosition.X,
+                   LFocusRect.Bottom - FKBBounds.Top);
+        end;
+    end;
+    if not FNeedOffset then
+        RestorePosition;
+end;
+
+procedure TFrmBase.RestorePosition;
+begin
+    vScroll.ViewportPosition := PointF(vScroll.ViewportPosition.X, 0);
+    mainLayout.Align := TAlignLayout.Client;
+    vScroll.RealignContent;
+end;
+
+procedure TFrmBase.CalcContentBoundsProc(Sender: TObject;
+                                       var ContentBounds: TRectF);
+begin
+    if FNeedOffset and (FKBBounds.Top > 0) then
+    begin
+        ContentBounds.Bottom := Max(ContentBounds.Bottom,
+                                    2 * ClientHeight - FKBBounds.Top);
+    end;
+end;
+{$ENDIF}
+
+end.

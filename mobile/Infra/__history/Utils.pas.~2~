@@ -1,0 +1,14 @@
+unit Utils;
+
+interface
+
+//const cor_padrao      = $FF8A8E77; // Cor principal para teste
+
+const URL_BASE = 'https://sandro-dsmovie.herokuapp.com/';
+
+implementation
+
+uses
+  System.MaskUtils, System.SysUtils;
+
+end.

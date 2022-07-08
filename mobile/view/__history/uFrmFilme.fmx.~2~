@@ -1,0 +1,152 @@
+inherited FrmFilme: TFrmFilme
+  Caption = 'Filme'
+  DesignerMasterStyle = 0
+  inherited vScroll: TVertScrollBox
+    Viewport.Width = 400.000000000000000000
+    Viewport.Height = 600.000000000000000000
+    inherited mainLayout: TLayout
+      object Image1: TImage
+        MultiResBitmap = <
+          item
+          end>
+        Align = Top
+        Size.Width = 400.000000000000000000
+        Size.Height = 250.000000000000000000
+        Size.PlatformDefault = False
+        Visible = False
+      end
+      object lblNomeFilme: TLabel
+        Align = Top
+        StyledSettings = []
+        Margins.Left = 10.000000000000000000
+        Margins.Top = 15.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 10.000000000000000000
+        Position.Y = 15.000000000000000000
+        Size.Width = 380.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Roboto'
+        TextSettings.Font.Size = 20.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        Text = 'Nome do filme'
+        TabOrder = 5
+      end
+      object lblAvaliacoes: TLabel
+        Align = Top
+        StyledSettings = []
+        Margins.Left = 10.000000000000000000
+        Margins.Top = 15.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 10.000000000000000000
+        Position.Y = 70.000000000000000000
+        Size.Width = 380.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Roboto'
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.FontColor = xFFC8C5C1
+        TextSettings.HorzAlign = Center
+        Text = '150 avalia'#231#245'es'
+        TabOrder = 3
+      end
+      object lblNota: TLabel
+        Align = Top
+        StyledSettings = []
+        Margins.Left = 10.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 10.000000000000000000
+        Position.Y = 95.000000000000000000
+        Size.Width = 380.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Roboto'
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = xFFCB913E
+        TextSettings.HorzAlign = Center
+        Text = '4.5'
+        TabOrder = 1
+      end
+      object Label1: TLabel
+        Align = Top
+        StyledSettings = []
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 25.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 20.000000000000000000
+        Position.Y = 140.000000000000000000
+        Size.Width = 370.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Roboto'
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        Text = 'Sinopse'
+        TabOrder = 4
+      end
+      object lblSinopse: TLabel
+        Align = Top
+        StyledSettings = []
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 7.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Margins.Bottom = 20.000000000000000000
+        Position.X = 20.000000000000000000
+        Position.Y = 167.000000000000000000
+        Size.Width = 370.000000000000000000
+        Size.Height = 250.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Roboto'
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.FontColor = xFFC8C5C1
+        TextSettings.VertAlign = Leading
+        Text = 
+          'Lorem Ipsum is simply dummy text of the printing and typesetting' +
+          ' industry. Lorem Ipsum has been the industry'#39's standard dummy te' +
+          'xt ever since the 1500s, when an unknown printer took a galley o' +
+          'f type and scrambled it to make a type specimen book. It has sur' +
+          'vived not only five centuries, but also the leap into electronic' +
+          ' typesetting, remaining essentially unchanged. It was popularise' +
+          'd in the 1960s with the release of Letraset sheets containing Lo' +
+          'rem Ipsum passages, and more recently with desktop publishing so' +
+          'ftware like Aldus PageMaker including versions of Lorem Ipsum.'
+        TabOrder = 2
+      end
+      object rectAvaliar: TRectangle
+        Align = Bottom
+        Fill.Color = xFFCB913E
+        Margins.Left = 55.000000000000000000
+        Margins.Right = 55.000000000000000000
+        Margins.Bottom = 30.000000000000000000
+        Position.X = 55.000000000000000000
+        Position.Y = 520.000000000000000000
+        Size.Width = 290.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        XRadius = 10.000000000000000000
+        YRadius = 10.000000000000000000
+        object Label2: TLabel
+          Align = Client
+          StyledSettings = []
+          Locked = True
+          Size.Width = 290.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
+          TextSettings.Font.Size = 20.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = xFF1F2123
+          TextSettings.HorzAlign = Center
+          Text = 'Avalie esse filme'
+          TabOrder = 5
+        end
+      end
+    end
+  end
+end

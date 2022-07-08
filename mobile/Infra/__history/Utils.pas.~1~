@@ -1,0 +1,20 @@
+unit Utils;
+
+interface
+
+//const cor_padrao      = $FF8A8E77; // Cor principal para teste
+
+const cor_padrao      = $FF4156BF; // Cor principal
+const cor_secundaria  = $FF5C5F5F;
+const cor_aviso       = $FFCDDC39;
+const cor_erro        = $FFFF5722;
+const cor_sucesso     = $FF4CAF50;
+const opacity_rect    = 0.9;
+const version_app     = '1.0.2';
+
+implementation
+
+uses
+  System.MaskUtils, System.SysUtils;
+
+end.

@@ -1,0 +1,294 @@
+unit uFrmPrincipal;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
+  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
+  uFrmBase, FMX.Layouts, Skia, FMX.Controls.Presentation, Skia.FMX, FMX.Edit,
+  FMX.Objects, Router4D, Router4D.Interfaces, FMX.ListView.Types,
+  FMX.ListView.Appearances, FMX.ListView.Adapters.Base, FMX.ListView, REST.Client,
+  REST.Types, System.JSON, System.Net.HttpClient;
+
+type
+  TFrmPrincipal = class(TFrmBase, iRouter4DComponent)
+    logoSvg: TSkSvg;
+    Label1: TLabel;
+    rectBuscar: TRectangle;
+    SkSvg1: TSkSvg;
+    editBuscar: TEdit;
+    lvFilmes: TListView;
+    Image1: TImage;
+    rectCarregando: TRectangle;
+    loading: TSkAnimatedImage;
+    procedure FormCreate(Sender: TObject);
+    procedure lvFilmesPaint(Sender: TObject; Canvas: TCanvas;
+      const ARect: TRectF);
+  private
+    procedure AddFilmes(ListView: TListView; IdFilme, NomeFilme, QtdeAvaliacoes,
+      Nota: String; Image : TImage);
+    function GetFilmes(Pagina : String='0') : String;
+    procedure ConfiguraRestClient(RestClient: TRestClient;
+      Request: TRestRequest; Response: TRestResponse);
+    procedure ListarFilmes(IndClear: Boolean; Pagina: string='0');
+    procedure TThreadEndListarFilmes(Sender: TObject);
+    procedure BuscarFromUrlMultiPlatform(Url: string;
+      out Stream: TBytesStream);
+    { Private declarations }
+//    procedure CreateRouters;
+  public
+    { Public declarations }
+
+    function  Render : TFmxObject;
+    procedure UnRender;
+  end;
+
+var
+  FrmPrincipal: TFrmPrincipal;
+
+const
+  URL_BASE = 'https://sandro-dsmovie.herokuapp.com';
+
+implementation
+
+{$R *.fmx}
+Procedure TFrmPrincipal.ConfiguraRestClient(RestClient: TRestClient; Request: TRestRequest; Response: TRestResponse);
+begin
+
+  RestClient.Accept := 'application/json, text/plain; q=0.9, text/html;q=0.8,';
+  RestClient.AcceptCharset := 'utf-8, *;q=0.8';
+  RestClient.FallbackCharsetEncoding := 'utf-8';
+  RestClient.AllowCookies := true;
+  RestClient.AutoCreateParams := true;
+  RestClient.HandleRedirects := true;
+  // response
+  Request.Client := RestClient;
+  Request.Accept := 'application/json, text/plain; q=0.9, text/html;q=0.8,';
+  Request.AcceptCharset := 'utf-8, *;q=0.8';
+  Request.Timeout := 3000;
+  Request.AcceptEncoding :='';
+  Request.AutoCreateParams := true;
+  Request.HandleRedirects := true;
+  Request.Response := response;
+
+  Response.ContentType := 'application/json';
+  Response.ContentEncoding := 'utf-8';
+
+end;
+
+Function TFrmPrincipal.GetFilmes(Pagina : String='0') : String;
+var
+  RestClient  : TRESTClient;
+  Request     : TRESTRequest;
+  Response    : TRESTResponse;
+begin
+  try
+    RestClient  := TRESTClient.Create(URL_BASE);
+    Response    := TRESTResponse.Create(nil);
+    Request     := TRESTRequest.Create(nil);
+
+    ConfiguraRestClient(RestClient, Request, Response);
+
+    RestClient.BaseURL := URL_BASE + '/movies?sort=title&size=15&page=' + Pagina;
+
+    Request.Params.Clear;
+    Request.Timeout := 60000;
+    Request.Method  := TRESTRequestMethod.rmGET;
+    Request.Execute;
+
+    if Response.StatusCode in [200, 201, 203] then
+      Result := Response.Content;
+      
+  finally
+    RestClient.Free;
+    Response.Free;
+    Request.Free
+  end;
+end;
+
+procedure TFrmPrincipal.ListarFilmes(IndClear: Boolean; Pagina: string='0');
+var
+  Thread : TThread;
+begin
+  // Em processamento....
+  if lvFilmes.TagString = 'processando' then
+      exit;
+
+  lvFilmes.TagString := 'processando';
+
+  //--------------------------------------------
+
+  if IndClear then
+  begin
+      lvFilmes.ScrollTo(0);
+      lvFilmes.Tag := 0;
+      lvFilmes.Items.Clear;
+  end;
+
+  lvFilmes.BeginUpdate;
+
+  rectCarregando.Visible := True;
+  loading.Enabled        := True;
+  
+  Thread := TThread.CreateAnonymousThread(procedure
+  var
+    Json      : String;
+    JsonValue : TJSONValue;
+    JObj      : TJSONObject;
+    Obj       : TJSONValue;
+    JsonArray : TJSONArray;
+    Filme     : TJSONObject;
+    I         : Integer;
+    Image     : TImage;
+    Stream      : TBytesStream;
+  begin
+    Json := '';
+
+    Json := GetFilmes(Pagina);
+
+    if lvFilmes.Tag >=0 then
+      lvFilmes.Tag := lvFilmes.Tag + 1;
+
+    if Json <> '' then
+    begin
+      JsonValue   := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Json), 0);
+      JObj        := JsonValue as TJsonObject;
+      Obj         := jObj.Get('content').JsonValue;
+      JsonArray   := Obj as TJSONArray;
+
+      if JsonArray.Count > 0 then
+      begin
+        for I := 0 to JsonArray.Count - 1 do
+        begin
+          Filme := JsonArray.Get(i) as TJsonObject;
+
+          Image := nil;
+          Image := TImage.Create(nil);
+
+          Stream := nil;
+          Stream := TBytesStream.Create;
+
+          BuscarFromUrlMultiPlatform(Filme.Get('image').JsonValue.Value, Stream);
+
+          Image.Bitmap.LoadFromStream(Stream);
+
+          TThread.Synchronize(nil, procedure
+          begin
+            AddFilmes(
+              lvFilmes, 
+              Filme.Get('id').JsonValue.Value,
+              Filme.Get('title').JsonValue.Value,
+              Filme.Get('count').JsonValue.Value,
+              Filme.Get('score').JsonValue.Value,
+              Image);
+          end);
+        end;
+          
+      end;
+    end;
+  end);
+
+  Thread.OnTerminate := TThreadEndListarFilmes;
+  Thread.Start;
+end;
+
+procedure TFrmPrincipal.lvFilmesPaint(Sender: TObject; Canvas: TCanvas;
+  const ARect: TRectF);
+begin
+  if (lvFilmes.Items.Count >=0) and (lvFilmes.Tag >= 0) then
+    if lvFilmes.GetItemRect(lvFilmes.Items.Count - 4).Bottom <= lvFilmes.Height then
+      ListarFilmes(false, lvFilmes.Tag.ToString);
+end;
+
+procedure TFrmPrincipal.TThreadEndListarFilmes(Sender: TObject);
+begin
+  lvFilmes.TagString := '';
+
+  lvFilmes.EndUpdate;
+
+  rectCarregando.Visible := False;
+  loading.Enabled        := False;
+
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+//        TLoading.Hide;
+//        TLoading.ToastMessage(
+//              FrmProduto,
+//              Exception(TThread(Sender).FatalException).Message,
+//              TAlignLayout.Top,
+//              Utils.cor_erro,
+//              $FFFFFFFF,
+//              8);
+    end;
+end;
+
+procedure TFrmPrincipal.AddFilmes(
+                              ListView : TListView;
+                              IdFilme : String;
+                              NomeFilme : String;
+                              QtdeAvaliacoes : String;
+                              Nota : String;
+                              Image : TImage);
+var
+  Qtde    : Integer;
+begin
+  Qtde := 0;
+  Qtde := StrToIntDef(QtdeAvaliacoes, 0);
+  
+  with ListView.Items.Add do
+  begin
+    TagString := IdFilme;
+
+    TListItemText(Objects.FindDrawable('TxtNomeFilme')).Text := NomeFilme;
+
+    if Qtde <= 1 then
+      TListItemText(Objects.FindDrawable('TxtAvaliacoes')).Text := Qtde.ToString + ' avaliação'
+    else
+      TListItemText(Objects.FindDrawable('TxtAvaliacoes')).Text := Qtde.ToString + ' avaliações';
+      
+    TListItemText(Objects.FindDrawable('TxtNota')).Text := Nota;
+
+    TListItemImage(Objects.FindDrawable('ImgFoto')).Bitmap := Image.Bitmap;
+  end;
+end;
+
+Procedure TFrmPrincipal.BuscarFromUrlMultiPlatform(Url: string; out Stream : TBytesStream);
+var
+    Http : THTTPClient;
+begin
+    try
+        try
+            Http := THTTPClient.Create;
+            Http.Get(Url, Stream);
+        except
+            raise Exception.Create('Erro no carregamento da imagem!');
+        end;
+
+    finally
+        if Assigned(Http) then
+            Http.Free;
+    end;
+end;
+
+procedure TFrmPrincipal.FormCreate(Sender: TObject);
+var
+  I : Integer;
+begin
+  inherited;
+
+  lvFilmes.Tag := 0;
+
+  ListarFilmes(True, '0');
+end;
+
+function TFrmPrincipal.Render: TFmxObject;
+begin
+  Result := mainLayout;
+end;
+
+procedure TFrmPrincipal.UnRender;
+begin
+
+end;
+
+end.

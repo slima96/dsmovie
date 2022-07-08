@@ -1,0 +1,49 @@
+unit uFrmFilme;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
+  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
+  uFrmBase, FMX.Layouts, Router4D, Router4D.Interfaces, FMX.Objects,
+  FMX.Controls.Presentation;
+
+type
+  TFrmFilme = class(TFrmBase, iRouter4DComponent)
+    Image1: TImage;
+    lblNomeFilme: TLabel;
+    lblAvaliacoes: TLabel;
+    lblNota: TLabel;
+    Label1: TLabel;
+    lblSinopse: TLabel;
+    rectAvaliar: TRectangle;
+    Label2: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+    function  Render : TFmxObject;
+    procedure UnRender;
+  end;
+
+var
+  FrmFilme: TFrmFilme;
+
+implementation
+
+{$R *.fmx}
+
+{ TFrmFilme }
+
+function TFrmFilme.Render: TFmxObject;
+begin
+  Result := mainLayout;
+end;
+
+procedure TFrmFilme.UnRender;
+begin
+
+end;
+
+end.

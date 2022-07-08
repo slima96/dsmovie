@@ -1,0 +1,12 @@
+{
+	"name": "mobile",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"github.com/viniciussanchez/restrequest4delphi": "^v3.0.18",
+		"https://github.com/bittencourtthulio/router4delphi": "^1.0.7"
+	}
+}

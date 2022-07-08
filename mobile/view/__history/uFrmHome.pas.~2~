@@ -1,0 +1,44 @@
+unit uFrmHome;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
+  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
+  uFrmBase, FMX.Controls.Presentation, FMX.Objects, FMX.Layouts, Skia, Skia.FMX,
+  Router4D, Router4D.Interfaces;
+
+type
+  TFrmHome = class(TFrmBase, iRouter4DComponent)
+    rectAcessarCatalogo: TRectangle;
+    lblAcessar: TLabel;
+    SkSvg1: TSkSvg;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+    function  Render : TFmxObject;
+    procedure UnRender;
+  end;
+
+var
+  FrmHome: TFrmHome;
+
+implementation
+
+{$R *.fmx}
+
+{ TFrmHome }
+
+function TFrmHome.Render: TFmxObject;
+begin
+    Result := mainLayout;
+end;
+
+procedure TFrmHome.UnRender;
+begin
+
+end;
+
+end.

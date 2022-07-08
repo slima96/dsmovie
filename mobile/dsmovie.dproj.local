@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/06/28 22:37:28.000.974,=C:\Users\sandr\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/06/28 22:38:18.000.014,C:\Users\sandr\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmBase.pas</Transaction>
+    <Transaction>2022/06/28 22:38:18.000.014,C:\Users\sandr\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.fmx=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmBase.fmx</Transaction>
+    <Transaction>2022/06/28 22:38:24.000.263,C:\Users\sandr\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\dsmovie.dproj</Transaction>
+    <Transaction>2022/06/28 22:50:25.000.418,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmBase.pas</Transaction>
+    <Transaction>2022/06/28 23:00:10.000.625,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/28 23:04:27.000.574,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmSplash.pas=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/28 23:04:27.000.574,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmSplash.fmx=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.fmx</Transaction>
+    <Transaction>2022/06/30 20:54:55.000.265,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:13:56.000.401,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:19:19.000.136,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmMain.pas=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:19:19.000.136,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmMain.fmx=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.fmx</Transaction>
+    <Transaction>2022/06/30 21:23:26.000.302,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:33:51.000.978,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmHome.pas=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:33:51.000.978,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmHome.fmx=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.fmx</Transaction>
+    <Transaction>2022/06/30 21:38:00.000.743,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:53:28.000.885,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmPrincipal.pas=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/06/30 21:53:28.000.885,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmPrincipal.fmx=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.fmx</Transaction>
+    <Transaction>2022/07/01 21:54:40.000.101,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas</Transaction>
+    <Transaction>2022/07/01 22:09:26.000.826,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.fmx=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmFilme.fmx</Transaction>
+    <Transaction>2022/07/01 22:09:26.000.826,C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Unit1.pas=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\view\uFrmFilme.pas</Transaction>
+    <Transaction>2022/07/01 22:39:40.000.629,=C:\Workspaces\WS-DEVSUPERIOR\dsmovie\mobile\Infra\Utils.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile Android64="" Android="RXCT1017ADD"/>
+	</ActiveMobileDevice>
+</BorlandProject>

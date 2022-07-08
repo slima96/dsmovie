@@ -1,0 +1,28 @@
+program dsmovie;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  FMX.Types,
+  Skia.FMX,
+  uFrmBase in 'view\uFrmBase.pas' {FrmBase},
+  uFrmSplash in 'view\uFrmSplash.pas' {FrmSplash},
+  uFrmMain in 'view\uFrmMain.pas' {FrmMain},
+  uFrmHome in 'view\uFrmHome.pas' {FrmHome};
+
+{$R *.res}
+
+begin
+  GlobalUseMetal := True;
+  GlobalUseSkiaRasterWhenAvailable := False;
+  GlobalUseSkia := True;
+
+  {$IFDEF DEBUG}
+  ReportMemoryLeaksOnShutdown := True;
+  {$ENDIF}
+
+  Application.Initialize;
+  Application.CreateForm(TFrmMain, FrmMain);
+  Application.CreateForm(TFrmHome, FrmHome);
+  Application.Run;
+end.
